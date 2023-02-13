@@ -1,14 +1,16 @@
 import React, { useState } from 'react'
-import StepOtp from './steps/StepOtp';
-import StepPhoneEmail from './steps/StepPhoneEmail';
-
+import StepAvatar from './steps/StepAvatar';
+import StepName from './steps/StepName';
+import StepUsername from './steps/StepUsername';
 
 const steps = {
-    1: StepPhoneEmail,
-    2: StepOtp,
+    1: StepName,
+    2: StepAvatar,
+    3: StepUsername
 }
 
-const Register = () => {
+
+const Activate = () => {
     const [step, setStep] = useState(1);
     const Step = steps[step];
 
@@ -23,4 +25,4 @@ const Register = () => {
   )
 }
 
-export default Register
+export default Activate
