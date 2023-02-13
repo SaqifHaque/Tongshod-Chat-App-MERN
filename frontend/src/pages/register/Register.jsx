@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React, { useCallback, useState } from 'react'
+import PublicLayout from '../../components/shared/PublicLayout';
 import StepOtp from './steps/StepOtp';
 import StepPhoneEmail from './steps/StepPhoneEmail';
 
@@ -10,16 +11,19 @@ const steps = {
 
 const Register = () => {
     const [step, setStep] = useState(1);
+    const [type, setType] = useState('phone')
     const Step = steps[step];
 
-    const onNext = () => {
+    const onNext = useCallback((name) =>{
+      console.log(name, "hello")
         setStep(step + 1);
-    }
+        setType(name);
+    },[step])
 
   return (
-    <>
-        <Step></Step>
-    </>
+    <PublicLayout>
+        <Step onNext={onNext} otpType={step === 2 ? type : undefined}></Step>
+    </PublicLayout>
   )
 }
 

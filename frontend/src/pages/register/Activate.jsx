@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import PublicLayout from '../../components/shared/PublicLayout';
 import StepAvatar from './steps/StepAvatar';
 import StepName from './steps/StepName';
 import StepUsername from './steps/StepUsername';
@@ -19,9 +20,9 @@ const Activate = () => {
     }
 
   return (
-    <>
-        <Step></Step>
-    </>
+    <PublicLayout>
+        <Step onNext={onNext}></Step>
+    </PublicLayout>
   )
 }
 
