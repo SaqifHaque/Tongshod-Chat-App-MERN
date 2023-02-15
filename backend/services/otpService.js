@@ -1,13 +1,7 @@
 const crypto = require('crypto');
 const asyncHandler = require('express-async-handler');
 const { hashOtp } = require('./hashService');
-
-const smsId = process.env.SMS_SID;
-const smsAuthToken = process.env.SMS_AUTH_TOKEN;
-
-const twilio = require('twilio')(smsId, smsAuthToken, {
-    lazyLoading: true
-})
+const twilio = require('../utils/twilio');
 
 const generateOtp = () => {
     const otp = crypto.randomInt(1000,9999);
