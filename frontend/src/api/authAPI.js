@@ -21,9 +21,10 @@ export const sendOtp = async (data) => {
 
 export const verifyOtp = async (data) => {
     try {
-        const response = await axios.post(`/send-otp`, data);
+        const response = await axios.post(`/verify-otp`, data);
         return response.data;
     } catch (error) {
+        console.log(error);
        errorHandler(error);
     }
 }
