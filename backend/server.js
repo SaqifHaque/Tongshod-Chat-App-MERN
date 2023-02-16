@@ -10,17 +10,18 @@ require('dotenv').config();
 const app = express();
 const port = process.env.PORT || 5500;
 
-app.use(cors({
-    origin: ["http://localhost:3000",],
-    credentials: true,
-}));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(bodyParser.json())
 
-app.use('/api/auth', authRoute);
+app.use(cors({
+    origin: ["http://localhost:3000",],
+    credentials: true,
+}));
 
+//Routes Middleware
+app.use('/api/auth', authRoute);
 
 //Error Middleware
 app.use(errorHandler);
