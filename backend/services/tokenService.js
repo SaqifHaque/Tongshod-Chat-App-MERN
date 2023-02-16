@@ -1,4 +1,6 @@
 const jwt = require('jsonwebtoken');
+const Token = require('../schema/tokenSchema');
+const asyncHandler = require('express-async-handler')
 
 const generateToken = (payload) => {
     const accessToken = jwt.sign(payload, process.env.JWT_SECRET, {
@@ -10,6 +12,18 @@ const generateToken = (payload) => {
     return { accessToken, refreshToken };
 }
 
+const storeRefreshToken = asyncHandler( async (token, userId) => {
+    try {
+        await Token.create({
+            token,
+            userId
+        })
+    } catch (error) {
+        console.log(error);
+    }
+})
+
 module.exports = {
-    generateToken
+    generateToken,
+    storeRefreshToken
 }
