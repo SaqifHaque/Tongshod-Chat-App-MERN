@@ -15,7 +15,6 @@ const Register = () => {
     const Step = steps[step];
 
     const onNext = useCallback((name) =>{
-      console.log(name, "hello")
         setStep(step + 1);
         setType(name);
     },[step])
