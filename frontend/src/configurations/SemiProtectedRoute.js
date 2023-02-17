@@ -1,14 +1,16 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { selectIsAuth, selectUser } from '../redux/features/auth/authSlice';
+import { useSelector } from 'react-redux';
 
 const SemiProtectedRoute = ({children, ...rest}) => {
-    const isAuth = true;
-    const user = { activated: false }
+    const isAuth = useSelector(selectIsAuth);
+    const { activated } = useSelector(selectUser);
     const navigate = useNavigate();
-  
+    
     if(!isAuth) {
       navigate('/');
-    } else if(isAuth && !user.activated){
+    } else if(isAuth && !activated){
       return (
         <>
             {children}
