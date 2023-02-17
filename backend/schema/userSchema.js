@@ -2,10 +2,14 @@ const mongoose = require('mongoose');
 // const bcrypt = require('bcryptjs');
 
 const userSchema = mongoose.Schema({
-    //  name: {
-    //     type: String,
-    //     requred: [true, "Please add a name"]
-    //  },
+     name: {
+        type: String,
+        requred: false
+     },
+     avatar : {
+      type: String,
+      require: false
+     },
     //  email: {
     //     type: String,
     //     required: [true, "Please add an email"],
@@ -36,11 +40,6 @@ const userSchema = mongoose.Schema({
         type: Boolean,
         default: false
      },
-    //  bio: {
-    //     type: String,
-    //     maxLength: [250, "Bio must not be more than 250 characters"],
-    //     default: "No bio available"
-    //  }
 }, {
     timestamps: true,
 });
