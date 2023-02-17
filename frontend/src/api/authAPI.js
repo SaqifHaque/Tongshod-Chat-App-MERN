@@ -28,3 +28,13 @@ export const verifyOtp = async (data) => {
        errorHandler(error);
     }
 }
+
+export const activate = async (data) => {
+    try {
+        const response = await axios.post(`/activate`, data);
+        return response.data;
+    } catch (error) {
+        console.log(error);
+       errorHandler(error);
+    }
+}
