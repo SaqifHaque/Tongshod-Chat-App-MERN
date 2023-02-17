@@ -23,7 +23,12 @@ const storeRefreshToken = asyncHandler( async (token, userId) => {
     }
 })
 
+const verifyAccessToken = asyncHandler( async (token) => {
+    return jwt.verify(token, process.env.JWT_SECRET)
+})
+
 module.exports = {
     generateToken,
-    storeRefreshToken
+    storeRefreshToken,
+    verifyAccessToken
 }
