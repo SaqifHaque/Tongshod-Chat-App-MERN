@@ -1,6 +1,6 @@
 const asyncHandler = require('express-async-handler');
 const { generateOtp, sendBySms } = require('../services/otpService')
-const { generateToken, storeRefreshToken } = require('../services/tokenService');
+const { generateToken, storeRefreshToken, verifyRefreshToken, updateRefreshToken } = require('../services/tokenService');
 const { hashOtp } = require('../services/hashService');
 const User = require('../schema/userSchema');
 const UserDto = require('../dtos/userDto');
@@ -96,7 +96,7 @@ const activate = asyncHandler(async (req, res) => {
     }
 
     const buffer = Buffer.from(
-        avatar.replace(/^data:image\/png;base64,/, ''),'base64'
+        avatar.replace(/^data:image\/(png|jpg|jpeg);base64,/, ''),'base64'
     );
 
     const imagePath = `${Data.now()}-${Math.round(Math.random()*1e9)}.png`
@@ -128,12 +128,67 @@ const activate = asyncHandler(async (req, res) => {
         throw new Error("Something went wrong");
     }
    
-
-
 })
+
+const refreshToken = asyncHandler(async (req,res) => {
+    const { refreshToken: refreshTokenFromCookie } = req.cookies;
+
+    let userData;
+    try {
+        userData = await verifyRefreshToken(refreshTokenFromCookie);
+    } catch (error) {
+        res.status(401); 
+        return new Error("Invalid Token");
+    }
+
+    try{
+        const token = tokenService.findRefreshToken(userData._id, refreshTokenFromCookie)
+
+        if(!token){
+            res.status(401);
+            return new Error("invalid Token");
+        }
+
+    } catch(error) {    
+        res.status(500);
+        return new Error("Internal Error");
+    }
+
+    const user = await User.findOne({_id: userData._id});
+    if(!user){
+        res.status(404);
+        return new Error("No users");
+    }
+
+    const { refreshToken, accessToken } = generateTokens({_id: userData._id});
+
+    try {
+        await updateRefreshToken(userData._id, refreshToken):
+    } catch (error) {
+        res.status(500);
+        return new Error("Internal Error");
+    }
+
+    res.cookie('refreshToken', refreshToken, {
+        maxAge: 1000 * 60 * 60 * 24 * 30,
+        httpOnly: true,
+    })
+
+    res.cookie('accessToken', accessToken, {
+        maxAge: 1000 * 60 * 60 * 24 * 30,
+        httpOnly: true,
+    })
+
+    const userDto = new UserDto(user);
+
+    res.json({ user: userDto, auth: true })
+    
+})
+
 
 module.exports = {
     sendOtp,
     verifyOtp,
-    activate
+    activate,
+    refreshToken
 }

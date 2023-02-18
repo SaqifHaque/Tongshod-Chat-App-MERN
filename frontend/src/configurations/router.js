@@ -26,9 +26,9 @@ const router = createBrowserRouter([
   {
     path: "activate",
     element: (
-      <SemiProtectedRoute>
+      // <SemiProtectedRoute>
         <Activate/>
-      </SemiProtectedRoute>
+      // </SemiProtectedRoute>
     ),
   },
   

@@ -5,6 +5,7 @@ import Card from '../../../components/UIControls/Card'
 import avatar from '../../../assets/avatar.png';
 import { SET_AVATAR } from '../../../redux/features/activate/activateSlice';
 import { activate } from '../../../api/authAPI';
+import { SET_AUTH } from '../../../redux/features/auth/authSlice';
 
 const StepAvatar = ({onNext}) => {
   const dispatch = useDispatch();
@@ -13,7 +14,7 @@ const StepAvatar = ({onNext}) => {
 
   const captureImage = (e) => {
     const file = e.target.files[0];
-    const previewImage = URL.createObjectURL(e.target.files[0])
+    const previewImage = URL.createObjectURL(file)
     setImage(previewImage);
     dispatch(SET_AVATAR(previewImage))
     
@@ -24,6 +25,10 @@ const StepAvatar = ({onNext}) => {
   const onSubmit = async () => {
     try {
        const { data } = await activate({ name, image });
+
+       if(data.auth) {
+           dispatch(SET_AUTH(data));
+       }
     } catch(error) {
 
     }
@@ -39,7 +44,7 @@ const StepAvatar = ({onNext}) => {
           <input onChange={(e) => captureImage(e)} id="avatarInput" type="file" className="hidden"/>
           <label htmlFor="avatarInput" className="text-blue-500 underline text-xs font-md font-sans">Choose a different photo</label>
       </div>
-      <Button onButtonClick={onNext} title="Next  ->"></Button>
+      <Button onButtonClick={onSubmit} title="Next  ->"></Button>
   </Card>
   )
 }
