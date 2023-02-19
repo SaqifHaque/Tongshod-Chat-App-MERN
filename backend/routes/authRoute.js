@@ -5,6 +5,6 @@ const authorization = require('../middleware/authMiddleware');
 router.post('/send-otp', sendOtp);
 router.post('/verify-otp', verifyOtp);
 router.post('/activate', authorization, activate);
-router.post('/refresh', refreshToken); 
+router.get('/refresh', refreshToken); 
 
 module.exports = router;
