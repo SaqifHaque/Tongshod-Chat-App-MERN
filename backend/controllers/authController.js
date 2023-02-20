@@ -185,10 +185,22 @@ const refreshToken = asyncHandler(async (req,res) => {
     
 })
 
+const logout = asyncHandler(async (req,res) => {
+    const { refreshToken } = req.cookies;
+
+    await Token.deleteOne({ token : refreshToken });
+
+    res.clearCookie('refreshToken');
+    res.clearCookie('accessToken');
+
+    res.json({user: null, auth: false});
+})
+
 
 module.exports = {
     sendOtp,
     verifyOtp,
     activate,
-    refreshToken
+    refreshToken,
+    logout
 }

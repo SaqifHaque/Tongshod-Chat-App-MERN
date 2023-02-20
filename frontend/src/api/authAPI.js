@@ -39,6 +39,16 @@ export const activate = async (data) => {
     }
 }
 
+export const logout = async () => {
+    try {
+        const response = await axios.post(`/logout`);
+        return response.data;
+    } catch (error) {
+        console.log(error);
+       errorHandler(error);
+    }
+}
+
 axios.interceptors.response.use(
     (config) => {
         return config;

@@ -18,7 +18,12 @@ const authSlice  = createSlice({
         SET_AUTH(state, action) {
             const { user } = action.payload;
             state.user = user;
-            state.isAuth = true;
+
+            if(user === null) {
+                state.isAuth = false;
+            } else {
+                state.isAuth = true;
+            }
         },
         SET_OTP(state, action) {
             const { phone, hash } = action.payload;
