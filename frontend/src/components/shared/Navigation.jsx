@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { logout } from '../../api/authAPI';
 import logo from '../../logo.svg';
 import { SET_AUTH } from '../../redux/features/auth/authSlice';
+import Button from '../UIControls/Button';
 
 const Navigation = () => {
   const dispatch = useDispatch();
@@ -18,12 +19,16 @@ const Navigation = () => {
   }
 
   return (
-    <nav className="container px-20 py-0">
-        <Link className="flex flex-row items-center">
+    <nav className="container py-0">
+      <div className="flex flex-wrap items-center justify-between p-2">
+        <Link className="flex items-center">
             <img className="w-12" src={logo} alt=""/>
             <span>Tongshod</span>
         </Link>
-        <button onClick={logoutUser}>Logout</button>
+          <div className="float-right">
+            <Button title="Logout"/>
+          </div>
+        </div>
     </nav>
   )
 }
