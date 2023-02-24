@@ -27,9 +27,8 @@ export const SpinnerImg = () => {
 export const LoaderCard = ({message}) => {
     return(
     <Card>
-        <span className='text-white text-xl font-md font-sans mt-10'>{ message }</span>
-        <div className="loader ease-linear rounded-full border-4 border-t-4 border-gray-200 h-12 w-12 mb-4 "/>
-        <h2 className="text-center text-gray-300 text-xl font-semibold mb-20">Loading...</h2>
+        <div className="loader ease-linear rounded-full border-4 border-t-4 border-gray-200 h-12 w-12 mb-4 mt-10"/>
+        <span className='text-white text-xl font-md font-sans mb-20-10'>{ message }</span>
     </Card>
     )
 }

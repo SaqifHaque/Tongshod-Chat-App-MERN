@@ -6,11 +6,13 @@ import avatar from '../../../assets/avatar.png';
 import { SET_AVATAR } from '../../../redux/features/activate/activateSlice';
 import { activate } from '../../../api/authAPI';
 import { SET_AUTH } from '../../../redux/features/auth/authSlice';
+import { LoaderCard } from '../../../components/loader/Loader';
 
 const StepAvatar = ({onNext}) => {
   const dispatch = useDispatch();
   const { name, avatar } = useSelector((state) => state.activate);
   const {image, setImage} = useState(avatar);
+  const { loading, setLoading } = useState(false);
 
   const captureImage = (e) => {
     const file = e.target.files[0];
@@ -23,16 +25,22 @@ const StepAvatar = ({onNext}) => {
   }
 
   const onSubmit = async () => {
+    setLoading(true);
     try {
        const { data } = await activate({ name, image });
 
        if(data.auth) {
            dispatch(SET_AUTH(data));
        }
-    } catch(error) {
 
+    } catch(error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
     }
   }
+  
+  if(loading) return <LoaderCard message="Activation in Progress..."/>;
 
   return (
     <Card title={`Okay, ${name}`}>
