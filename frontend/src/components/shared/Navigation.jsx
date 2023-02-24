@@ -1,5 +1,5 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { logout } from '../../api/authAPI';
 import logo from '../../logo.svg';
@@ -8,6 +8,8 @@ import Button from '../UIControls/Button';
 
 const Navigation = () => {
   const dispatch = useDispatch();
+  const { isAuth } = useSelector((state) => state.auth);
+
   const logoutUser = async () => {
     try{
       const { data } = await logout();
@@ -26,7 +28,7 @@ const Navigation = () => {
             <span>Tongshod</span>
         </Link>
           <div className="float-right">
-            <Button title="Logout"/>
+            {isAuth && <Button title="Logout"/>}
           </div>
         </div>
     </nav>
