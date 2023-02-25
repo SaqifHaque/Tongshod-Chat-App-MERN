@@ -8,7 +8,7 @@ import Button from '../UIControls/Button';
 
 const Navigation = () => {
   const dispatch = useDispatch();
-  const { isAuth } = useSelector((state) => state.auth);
+  const { isAuth, user } = useSelector((state) => state.auth);
 
   const logoutUser = async () => {
     try{

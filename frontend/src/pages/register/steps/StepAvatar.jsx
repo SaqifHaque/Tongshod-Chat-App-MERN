@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import Button from '../../../components/UIControls/Button'
 import Card from '../../../components/UIControls/Card'
@@ -11,8 +11,9 @@ import { LoaderCard } from '../../../components/loader/Loader';
 const StepAvatar = ({onNext}) => {
   const dispatch = useDispatch();
   const { name, avatar } = useSelector((state) => state.activate);
-  const {image, setImage} = useState(avatar);
+  const { image, setImage } = useState(avatar);
   const { loading, setLoading } = useState(false);
+  const { unMounted, setUnMounted } = useState()
 
   const captureImage = (e) => {
     const file = e.target.files[0];
@@ -25,12 +26,16 @@ const StepAvatar = ({onNext}) => {
   }
 
   const onSubmit = async () => {
+    if(!name || !avatar) return;
     setLoading(true);
     try {
        const { data } = await activate({ name, image });
 
        if(data.auth) {
-           dispatch(SET_AUTH(data));
+          if(!unMounted){
+            dispatch(SET_AUTH(data));
+          }
+          
        }
 
     } catch(error) {
@@ -39,7 +44,13 @@ const StepAvatar = ({onNext}) => {
       setLoading(false);
     }
   }
-  
+
+  useEffect(() => {
+    return () => {
+      setUnMounted(true);
+    }
+  }, [])
+
   if(loading) return <LoaderCard message="Activation in Progress..."/>;
 
   return (
