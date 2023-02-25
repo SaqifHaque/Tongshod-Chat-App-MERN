@@ -14,6 +14,7 @@ const StepOtp = ({otpType}) => {
   const { phone, hash } = useSelector(selectOtp);
 
   const onSubmit = async () => {
+    if(!otp || !phone || !hash) return
     try {
       const data = await verifyOtp({ otp, phone, hash })
       console.log(data)

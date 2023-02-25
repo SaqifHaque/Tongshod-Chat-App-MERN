@@ -14,6 +14,7 @@ const Phone = ({onSwitch, onNext}) => {
     const [phoneNumber, setPhoneNumber] =  useState('');
 
     const onSubmit = async () => {  
+        if(!phoneNumber) return;
         const data = await sendOtp({'phone': phoneNumber});
         console.log(data, "data")
         dispatch(SET_OTP({ phone: data.phone, hash: data.hash }));
