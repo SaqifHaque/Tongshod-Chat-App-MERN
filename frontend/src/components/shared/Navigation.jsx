@@ -27,9 +27,15 @@ const Navigation = () => {
             <img className="w-12" src={logo} alt=""/>
             <span>Tongshod</span>
         </Link>
-          <div className="float-right">
-            {isAuth && <Button title="Logout"/>}
+          <div className="float-right flex item-center gap-x-2 px-4">
+            <h1>{user.name} user</h1>
+            <Link to="/">
+              <img src={user.avatar} width="40" height="40" alt="avatar"/>
+            </Link>
           </div>
+          {/* <div className="float-right">
+            {isAuth && <Button title="Logout"/>}
+          </div> */}
         </div>
     </nav>
   )
