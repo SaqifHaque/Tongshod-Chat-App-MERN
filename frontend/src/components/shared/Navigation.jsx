@@ -24,13 +24,16 @@ const Navigation = () => {
     <nav className="container py-0">
       <div className="flex flex-wrap items-center justify-between p-2">
         <Link className="flex items-center">
-            <img className="w-12" src={logo} alt=""/>
+            <img className="w-12" src={logo} alt="logo"/>
             <span>Tongshod</span>
         </Link>
           <div className="float-right flex item-center gap-x-2 px-4">
             <h1>{user.name} user</h1>
             <Link to="/">
-              <img src={user.avatar} width="40" height="40" alt="avatar"/>
+              {user.avatar ? 
+                <img src={user.avatar} width="40" height="40" alt="avatar"/> : 
+                <img src="../../assets/avatar.png" width="40" height="40" alt="avatar"/>
+              }
             </Link>
           </div>
           {/* <div className="float-right">
