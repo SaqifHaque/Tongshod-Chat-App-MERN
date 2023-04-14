@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const authRoute = require('./routes/authRoute');
+const roomRoute = require('./routes/roomRoute');
 const errorHandler = require('./middleware/errorMiddleware');
 const dbConnect = require('./db/dbconnect');
 const cors = require('cors');
@@ -26,6 +27,7 @@ app.use('/storage', express.static('storage'))
 
 //Routes Middleware
 app.use('/api/auth', authRoute);
+app.use('/api/rooms', roomRoute);
 
 //Error Middleware
 app.use(errorHandler);
