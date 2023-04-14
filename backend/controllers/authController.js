@@ -90,8 +90,8 @@ const verifyOtp = asyncHandler(async (req,res) => {
 
 const activate = asyncHandler(async (req, res) => {
     const { name, avatar } = req.body;
-    if(name || avatar) {
-        res.status(400):
+    if(!name || !avatar) {
+        res.status(400);
         throw new Error("All Fields are required");
     }
 
