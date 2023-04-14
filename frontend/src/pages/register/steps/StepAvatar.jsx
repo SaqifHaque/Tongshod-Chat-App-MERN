@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import Button from '../../../components/UIControls/Button'
 import Card from '../../../components/UIControls/Card'
-import avatar from '../../../assets/avatar.png';
 import { SET_AVATAR } from '../../../redux/features/activate/activateSlice';
 import { activate } from '../../../api/authAPI';
 import { SET_AUTH } from '../../../redux/features/auth/authSlice';
