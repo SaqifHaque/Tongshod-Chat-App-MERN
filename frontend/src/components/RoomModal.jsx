@@ -3,12 +3,19 @@ import Globe from "../assets/globe.png";
 import Social from "../assets/social.png";
 import Private from "../assets/private.png";
 import { AiOutlineCloseCircle } from 'react-icons/ai';
+import { createRoom as create } from '../api/roomAPI';
 
 const RoomModal = ({ onClose }) => {
   const [roomType, setRoomType] = useState('open');
   const [topic, setTopic] = useState('');
 
-  const createRoom = () => {
+  const createRoom = async () => {
+    try{
+      const { data } = await create({topic, roomType});
+      console.log(data);
+    } catch {
+
+    }
     
   }
 
