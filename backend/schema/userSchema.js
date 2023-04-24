@@ -8,7 +8,10 @@ const userSchema = mongoose.Schema({
      },
      avatar : {
       type: String,
-      require: false
+      require: false,
+      get: (avatar) => {
+         return `${process.env.BASE_URL}/${avatar}`;
+      }
      },
     //  email: {
     //     type: String,
@@ -42,6 +45,7 @@ const userSchema = mongoose.Schema({
      },
 }, {
     timestamps: true,
+    toJSON: { getters: true }
 });
 
 // Encrypt password before saving to DB
