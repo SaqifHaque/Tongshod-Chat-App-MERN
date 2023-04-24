@@ -1,11 +1,22 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import RoomCard from '../../components/RoomCard'
 import RoomModal from '../../components/RoomModal'
 import Navigation from '../../components/shared/Navigation'
 import SearchBox from '../../components/UIControls/SearchBox'
+import { getAllRooms } from '../../api/roomAPI'
 
 const Rooms = () => {
     const [showModal, setShowModal] = useState(false);
+    const [rooms, setRooms] = useState([]);
+
+    useEffect(() => {
+      const fetchRooms = async () => {
+        const {data} = await getAllRooms();
+        setRooms(data);
+      };
+      fetchRooms();
+    })
+
     const openModal = () => {
         setShowModal(true);
     }

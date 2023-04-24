@@ -20,3 +20,14 @@ export const createRoom = async (data) => {
        return error;
     }
 }
+
+export const getAllRooms = async (data) => {
+    try {
+        const response = await axios.get('', data);
+        return response.data;
+    } catch (error) {
+        console.log(error);
+       errorHandler(error);
+       return error;
+    }
+}
