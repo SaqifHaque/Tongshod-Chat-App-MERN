@@ -5,6 +5,7 @@ import { logout } from '../../api/authAPI';
 import logo from '../../logo.svg';
 import { SET_AUTH } from '../../redux/features/auth/authSlice';
 import Button from '../UIControls/Button';
+import avatar from '../../assets/avatar.png';
 
 const Navigation = () => {
   const dispatch = useDispatch();
@@ -27,14 +28,15 @@ const Navigation = () => {
             <img className="w-12" src={logo} alt="logo"/>
             <span>Tongshod</span>
         </Link>
-          <div className="float-right flex item-center gap-x-2 px-4">
+          <div className="float-right flex item-center gap-x-2 px-4 items-center">
             <h1>{user.name} user</h1>
             <Link to="/">
               {user.avatar ? 
                 <img src={user.avatar} width="40" height="40" alt="avatar"/> : 
-                <img src="../../assets/avatar.png" width="40" height="40" alt="avatar"/>
+                <img src={avatar} width="40" height="40" alt="avatar"/>
               }
             </Link>
+            {/* <Button title="Logout"/> */}
           </div>
           {/* <div className="float-right">
             {isAuth && <Button title="Logout"/>}
