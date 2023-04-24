@@ -1,9 +1,13 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
 
-const RoomCard = () => {
-  return (
-    
-        <div class="rounded-xl bg-gray-900 overflow-hidden shadow-xl hover:bg-gray-800">
+const RoomCard = ({room}) => {
+    const navigate = useNavigate();
+
+    return (
+        <div onClick={() => {
+            navigate(`/room/${room?.id}`);
+        }} class="rounded-xl bg-gray-900 overflow-hidden shadow-xl hover:bg-gray-800">
             <div class="px-6 py-4">
                 <div class="font-bold text-xl mb-2">Frontend Group</div>
                 <p class="text-gray-400 text-base">
