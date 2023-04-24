@@ -4,14 +4,17 @@ import Social from "../assets/social.png";
 import Private from "../assets/private.png";
 import { AiOutlineCloseCircle } from 'react-icons/ai';
 import { createRoom as create } from '../api/roomAPI';
+import { useNavigate } from 'react-router-dom';
 
 const RoomModal = ({ onClose }) => {
   const [roomType, setRoomType] = useState('open');
   const [topic, setTopic] = useState('');
+  const navigate = useNavigate();
 
   const createRoom = async () => {
     try{
       const { data } = await create({topic, roomType});
+      navigate(`/room/${data?.id}`);
       console.log(data);
     } catch {
 

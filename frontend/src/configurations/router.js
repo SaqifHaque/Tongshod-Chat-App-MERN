@@ -6,6 +6,7 @@ import Register from "../pages/register/Register";
 import Rooms from "../pages/rooms/Rooms";
 import GuestRoute from "./GuestRoute";
 import SemiProtectedRoute from "./SemiProtectedRoute";
+import RoomDetails from "../pages/rooms/RoomDetails";
 
 const router = createBrowserRouter([
   {
@@ -40,7 +41,14 @@ const router = createBrowserRouter([
       // </SemiProtectedRoute>
     ),
   },
-  
+  {
+    path: "room/:id",
+    element: (
+      // <SemiProtectedRoute>
+        <RoomDetails/>
+      // </SemiProtectedRoute>
+    ),
+  },
 ]);
 
 export default router;
