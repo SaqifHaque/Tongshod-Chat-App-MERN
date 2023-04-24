@@ -12,6 +12,15 @@ const createRoom = async(payload) => {
     return res.json(new RoomDto(room));
 }
 
+const getAllRooms = async(types) => {
+    const { rooms } = await Room.find({ roomType: { $in: types } })
+    .populate('speakers')
+    .populate('ownerId')
+    .exec();
+    
+    return rooms;
+}
+
 
 module.exports = {
     createRoom

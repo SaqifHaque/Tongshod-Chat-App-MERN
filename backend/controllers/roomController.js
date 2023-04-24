@@ -18,8 +18,15 @@ const createRoom = asyncHandler(async (req,res) => {
     res.json({user: null, auth: false});
 })
 
+const getRooms = asyncHandler(async (req,res) => {
+    const rooms = await roomService.getAllRooms(['open']);
+    const allRooms = rooms.map(room => new RoomDto(room));
+    return res.json(allRooms);
+})
+
 
 
 module.exports = {
-    createRoom
+    createRoom,
+    getRooms
 }
