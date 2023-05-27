@@ -14,8 +14,10 @@ export const useStateWithCallback = (initialState) => {
     })
 
     useEffect(() => {
-        cbRef.current(state); 
-        cbRef.current = null;
+        if(cbRef.current){
+            cbRef.current(state); 
+            cbRef.current = null;
+        }   
     }, [state])
 
     return  [state, updateState];
