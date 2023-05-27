@@ -7,10 +7,20 @@ const dbConnect = require('./db/dbconnect');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
 
+
 require('dotenv').config();
 
 const app = express();
 const port = process.env.PORT || 5500;
+
+const server = require('http').createServer(app);
+
+const io = require('socket.io')(server, {
+    cors: {
+        origin: 'http://localhost:3000',
+        methods: ['GET', 'POST']
+    }
+})
 
 
 app.use(express.json());
@@ -33,7 +43,11 @@ app.use('/api/rooms', roomRoute);
 app.use(errorHandler);
 
 
-app.listen(port, () => console.log(`Listening on port ${port}`));
+io.on('connection', (socket) => {
+    console.log('new Connection', socket.id);
+})
+
+server.listen(port, () => console.log(`Listening on port ${port}`));
 
 dbConnect();
 
