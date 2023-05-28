@@ -56,12 +56,20 @@ io.on('connection', (socket) => {
 
     const clients = Array.from(io.sockets.adapter.rooms.get(roomId) || []);
     clients.forEach(clientId => {
-        io.to(clientId).emit(ACTIONS.ADD_PEER, {});
+        io.to(clientId).emit(ACTIONS.ADD_PEER, {
+            peerId: scoket.id,
+            createOffer: false,
+            user
+        });
     }) 
 
     console.log(clients);
 
-    socket.emit(ACTIONS.ADD_PEER, {});
+    socket.emit(ACTIONS.ADD_PEER, {
+        peerId: clientId,
+        createOffer: true,
+        user: socketUserMapping[clientId]
+    });
 
     socket.join(roomId);
     
