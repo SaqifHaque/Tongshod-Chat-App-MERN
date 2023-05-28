@@ -1,5 +1,7 @@
 import { useCallback, useEffect, useRef } from 'react';
 import { useStateWithCallback } from './useStateWithCallback';
+import { ACTIONS } from '../actions';
+import freeice from ' freeice';
 
 const users = [
     {
@@ -14,11 +16,10 @@ const users = [
 
 export const useWebRTC = (roomId, user) => {
     const [clients, setClients] = useStateWithCallback(users);
-    const audioElements = useRef({
-
-    });
+    const audioElements = useRef({});
     const connections = useRef({});
     const localMediaStream = useRef(null);
+    const socket = useRef(null);
 
     const provideRef = (instance, userId) => {
         audioElements.current[userId]  = instance;
@@ -49,5 +50,20 @@ export const useWebRTC = (roomId, user) => {
             });
         })
     },[])
+
+    useEffect(() => {
+        const handleNewPeer = async ({peerId, createOffer, user: remoteUser}) => {
+            if(peerId in connections.current){
+                return console.warn(`You are already connected with ${peerId} (${user.name})`);
+            }
+
+            connections.current[peerId] = new RTCPeerConnection({
+                iceServers: freeice()
+            })
+        }
+
+        socket.current.on(ACTIONS.ADD_PEER, handleNewPeer)
+    }, [])
+
     return { clients, provideRef };
 }
