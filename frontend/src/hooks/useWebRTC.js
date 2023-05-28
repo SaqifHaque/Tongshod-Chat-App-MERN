@@ -60,6 +60,33 @@ export const useWebRTC = (roomId, user) => {
             connections.current[peerId] = new RTCPeerConnection({
                 iceServers: freeice()
             })
+
+            connections.current[peerId].onicecandidate = (event) => {
+                socket.current.emit(ACTIONS.RELAY_ICE, {
+                    peerId,
+                    icecandidate: event.candidate
+                })
+            }
+
+            connections.current[peerId].ontrack = ({
+                streams: [remoteStream]
+            }) => {
+                addNewClients(remoteUser, () => {
+                    if(audioElements.current[remoteUser.id]){
+                        audioElements.current[remoteUser.id].srcObject = remoteStream
+                    } else {
+                        let settled = false;
+                        const interval = setInterval(() => {
+                            if(audioElements.current[remoteUser.id]) {
+                                audioElements.current[remoteUser.id].srcObject = remoteStream;
+                                settled = true;
+                            }
+                            
+
+                        }, 1000)
+                    }
+                })
+            }
         }
 
         socket.current.on(ACTIONS.ADD_PEER, handleNewPeer)
