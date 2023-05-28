@@ -42,9 +42,29 @@ app.use('/api/rooms', roomRoute);
 //Error Middleware
 app.use(errorHandler);
 
+const socketUserMapping = {
+
+}
+
 
 io.on('connection', (socket) => {
     console.log('new Connection', socket.id);
+
+    socket.on(ACTIONS.JOIN, ({roomId, user}) => {
+        socketUserMapping[socket.id] = user;
+    })
+
+    const clients = Array.from(io.sockets.adapter.rooms.get(roomId) || []);
+    clients.forEach(clientId => {
+        io.to(clientId).emit(ACTIONS.ADD_PEER, {});
+    }) 
+
+    console.log(clients);
+
+    socket.emit(ACTIONS.ADD_PEER, {});
+
+    socket.join(roomId);
+    
 })
 
 server.listen(port, () => console.log(`Listening on port ${port}`));
