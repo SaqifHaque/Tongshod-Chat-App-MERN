@@ -81,15 +81,33 @@ export const useWebRTC = (roomId, user) => {
                                 audioElements.current[remoteUser.id].srcObject = remoteStream;
                                 settled = true;
                             }
-                            
+
+                            if(settled) {
+                                clearInterval(interval);
+                            }
 
                         }, 1000)
                     }
                 })
             }
+            localMediaStream.current.getTracks().forEach(track => {
+                connections.current[peerId].addTrack(track, localMediaStream.current)
+            });
+
+            if(createOffer) {
+                const offer = await connections.current[peerId].createOffer();
+                socket.current.emit(ACTIONS.RELAY_SDP, {
+                    peerId,
+                    sessionDescription: offer
+                })
+            }
         }
 
         socket.current.on(ACTIONS.ADD_PEER, handleNewPeer)
+
+        return () => {
+            socket.current.off(ACTIONS.ADD_PEER);
+        }
     }, [])
 
     return { clients, provideRef };
