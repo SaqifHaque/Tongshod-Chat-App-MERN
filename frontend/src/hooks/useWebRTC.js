@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef } from 'react';
 import { useStateWithCallback } from './useStateWithCallback';
 import { ACTIONS } from '../actions';
 import freeice from ' freeice';
+import { socketInit } from '../socket';
 
 const users = [
     {
@@ -47,6 +48,8 @@ export const useWebRTC = (roomId, user) => {
                     localElement.volume = 0;
                     localElement.srcObject = localMediaStream.current;
                 }
+                // socker emit join socket.io
+                socket.current.emit(ACTIONS.JOIN, {});
             });
         })
     },[])

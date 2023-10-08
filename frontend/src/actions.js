@@ -5,3 +5,5 @@ export const ACTIONS = {
     RELAY_ICE: 'relay-ice',
     RELAY_SDP: 'relay-sdp'
 }
+
+module.exports = ACTIONS;
